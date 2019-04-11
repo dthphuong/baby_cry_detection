@@ -31,12 +31,22 @@ class FeatureEngineer:
         :return: a numpy array (numOfFeatures x numOfShortTermWindows)
         """
 
-        zcr_feat = self.compute_librosa_features(audio_data=audio_data, feat_name='zero_crossing_rate')
-        rmse_feat = self.compute_librosa_features(audio_data=audio_data, feat_name='rmse')
-        mfcc_feat = self.compute_librosa_features(audio_data=audio_data, feat_name= 'mfcc')
-        spectral_centroid_feat = self.compute_librosa_features(audio_data=audio_data, feat_name='spectral_centroid')
-        spectral_rolloff_feat = self.compute_librosa_features(audio_data=audio_data, feat_name='spectral_rolloff')
-        spectral_bandwidth_feat = self.compute_librosa_features(audio_data=audio_data, feat_name='spectral_bandwidth')
+        zcr_feat = self.compute_librosa_features(
+            audio_data=audio_data, feat_name='zero_crossing_rate')
+        rmse_feat = self.compute_librosa_features(
+            audio_data=audio_data, feat_name='rmse')
+        mfcc_feat = self.compute_librosa_features(
+            audio_data=audio_data, feat_name='mfcc')
+        spectral_centroid_feat = self.compute_librosa_features(
+            audio_data=audio_data, feat_name='spectral_centroid')
+        spectral_rolloff_feat = self.compute_librosa_features(
+            audio_data=audio_data, feat_name='spectral_rolloff')
+        spectral_bandwidth_feat = self.compute_librosa_features(
+            audio_data=audio_data, feat_name='spectral_bandwidth')
+
+        # print zcr_feat.shape, rmse_feat.shape, mfcc_feat.shape, spectral_centroid_feat.shape, spectral_rolloff_feat.shape, spectral_bandwidth_feat.shape
+        rmse_feat = np.append(rmse_feat, [[0, 0, 0, 0]], axis=1)
+        # print zcr_feat.shape, rmse_feat.shape, mfcc_feat.shape, spectral_centroid_feat.shape, spectral_rolloff_feat.shape, spectral_bandwidth_feat.shape
 
         concat_feat = np.concatenate((zcr_feat,
                                       rmse_feat,
@@ -72,4 +82,3 @@ class FeatureEngineer:
             return spectral_rolloff(y=audio_data, sr=self.RATE, hop_length=self.FRAME, roll_percent=0.90)
         elif feat_name == 'spectral_bandwidth':
             return spectral_bandwidth(y=audio_data, sr=self.RATE, hop_length=self.FRAME)
-
