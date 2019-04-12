@@ -40,7 +40,8 @@ class TrainClassifier:
                                                             random_state=0,
                                                             stratify=self.y)
 
-        logging.info('Train set size: {0}. Test set size: {1}'.format(y_train.size, y_test.size))
+        logging.info('Train set size: {0}. Test set size: {1}'.format(
+            y_train.size, y_test.size))
 
         pipeline = Pipeline([
             ('scl', StandardScaler()),
@@ -55,7 +56,8 @@ class TrainClassifier:
                        # 'lda__n_components': range(2, 17)
                        }]
 
-        estimator = GridSearchCV(pipeline, param_grid, cv=10, scoring='accuracy')
+        estimator = GridSearchCV(pipeline, param_grid,
+                                 cv=10, scoring='accuracy', n_jobs=-1)
 
         logging.info('Training model...')
         start = timeit.default_timer()
@@ -77,6 +79,3 @@ class TrainClassifier:
         logging.info(perf)
 
         return perf, model.best_params_, model.best_estimator_
-
-
-
