@@ -21,6 +21,7 @@ class MajorityVoter:
         :return: 1 if more than half predictions are 1s
         """
 
+        print self.predictions
         if sum(self.predictions) > len(self.predictions)/2.0:
             return 1
         else:
